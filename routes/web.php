@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\SubscriptionController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\IndexController as AdminIndexController;
 use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
@@ -15,9 +17,9 @@ use App\Http\Controllers\Admin\Auth\LoginController as AdminLoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [IndexController::class, 'index'])->name('home');
+Route::get('/subscription', [SubscriptionController::class, 'index'])->name('subscription');
+Route::get('/subscription/{id}', [SubscriptionController::class, 'create'])->name('subscription.create');
 
 Route::group(['prefix' => 'admin'], function () {
     //admin auth routes
@@ -31,5 +33,3 @@ Route::group(['prefix' => 'admin'], function () {
 });
 
 Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
